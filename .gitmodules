@@ -1,0 +1,3 @@
+[submodule "snowplow"]
+	path = snowplow
+	url = https://github.com/snowplow/snowplow.git
