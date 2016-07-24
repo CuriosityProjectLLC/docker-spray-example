@@ -1,11 +1,9 @@
 # Docker-Spray example
 # VERSION 1.0
-
-# the base image is a trusted ubuntu build with java 7 (https://index.docker.io/u/dockerfile/java/)
-FROM java:7
+FROM williamyeh/scala
 
 # that's me!
-MAINTAINER Adam Warski, adam@warski.org
+MAINTAINER Ajish George, ajish@rootedinsights.com
 
 # we need this because the workdir is modified in dockerfile/java
 WORKDIR /
@@ -14,10 +12,11 @@ WORKDIR /
 USER daemon
 
 # copy the locally built fat-jar to the image
-ADD target/scala-2.11/docker-spray-example-assembly-1.0.jar /app/server.jar
+ADD target/scala-2.10/snowplow-stream-collector-0.7.0 /app/snowplow-stream-collector-0.7.0
+ADD snowplow.config /app/snowplow.config
 
 # run the server when a container based on this image is being run
-ENTRYPOINT [ "java", "-jar", "/app/server.jar" ]
+ENTRYPOINT [ "./app/snowplow-stream-collector-0.7.0", "--config", "/app/snowplow.config" ]
 
 # the server binds to 8080 - expose that port
 EXPOSE 8080
